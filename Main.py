@@ -1,3 +1,4 @@
+import time
 from ConnectToElasticSearchAndQuery import ConnectAndQueryToElasticSearch
 from RuleForBruteforce import RuleForBruteforce
 from RuleForXSS import RuleForXSS
@@ -25,7 +26,8 @@ class Main:
         users_list = ['piyush', 'root']
         known_ip_list = ['192.168.18.127', '192.168.18.130']
         objectOfRuleForBruteforce = RuleForBruteforce(client, users_list, known_ip_list)
-        objectOfRuleForBruteforce.reload()
+        objectOfRuleForBruteforce.start()
+        #objectOfRuleForBruteforce.join()
         # objectOfRuleForBruteforce.queryInElasticSearchData()
         
     #-------------------------------------------------------------------------------------------------------------------------
@@ -34,15 +36,14 @@ class Main:
         # Change variable to single query self.checkConnection()
         client = self.checkConnection()
         objectOfRuleForXSS = RuleForXSS(client)
-        #objectOfRuleForXSS.queryInElasticSearchAccessIndex()
-        #objectOfRuleForXSS.queryInElasticSearchErrorIndex()
-        objectOfRuleForXSS.correlateXSSEvents()
+        objectOfRuleForXSS.start()
+        #objectOfRuleForXSS.join()
 
     #-------------------------------------------------------------------------------------------------------------------------    
-
     def run(self):
         # Un-Comment it when necessary
-        # self.detectBruteForce()
+        self.detectBruteForce()
+        time.sleep(0.5)
         self.detectXSS()
     
     #-------------------------------------------------------------------------------------------------------------------------

@@ -2,12 +2,13 @@ import json, logging, time
 from elasticsearch.client import logger
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match
+from threading import *
 
-
-class RuleForBruteforce:
+class RuleForBruteforce(Thread):
 
     #-------------------------------------------------------------------------------------------------------------------------
     def __init__(self, client, users_list, known_ip_list):
+        super(RuleForBruteforce, self).__init__()
         self.client = client
         self.users_list = users_list
         self.known_ip_list = known_ip_list
@@ -83,14 +84,16 @@ class RuleForBruteforce:
                         logging.critical(bruteForceLog)
 
     #-------------------------------------------------------------------------------------------------------------------------
-    def reload(self):
+    def run(self):
         response, number_of_hits = self.queryInElasticSearchData()
         updated_number_of_hits = number_of_hits
         while True:
             response, number_of_hits = self.queryInElasticSearchData()
-            print ("Old", number_of_hits)
+            print ("Old_B", number_of_hits)
             if (number_of_hits-updated_number_of_hits)>=20:
                 updated_number_of_hits = number_of_hits
-                print ("Updated", updated_number_of_hits)
+                print ("Updated_B", updated_number_of_hits)
                 self.correlateEvents()
-            time.sleep(20)
+            time.sleep(1)
+    
+    #-------------------------------------------------------------------------------------------------------------------------
