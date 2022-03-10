@@ -8,7 +8,7 @@ class RuleForBruteforce(Thread):
 
     #-------------------------------------------------------------------------------------------------------------------------
     def __init__(self, client, users_list, known_ip_list):
-        super(RuleForBruteforce, self).__init__()
+        super(RuleForBruteforce, self).__init__() #initiated for threading
         self.client = client
         self.users_list = users_list
         self.known_ip_list = known_ip_list

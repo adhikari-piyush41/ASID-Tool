@@ -11,7 +11,7 @@ class ConnectAndQueryToElasticSearch:
 
     #-------------------------------------------------------------------------------------------------------------------------    
     def connectToElasticSearch(self):
-        # client = Elasticsearch('http://localhost:9200', size=10000)
+        # client = Elasticsearch('http://192.168.1.75:9200', size=10000)
         client = Elasticsearch(self.ip_address)
         return client
     
