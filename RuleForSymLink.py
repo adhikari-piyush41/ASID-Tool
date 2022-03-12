@@ -40,6 +40,7 @@ class RuleForSymLink():
         data = {}
         data["samba"] = []
         data["inotify"] = []
+
         for hit in response_samba_logs:
             samba_timestamp =  hit['@timestamp']
             samba_timestamp = samba_timestamp.replace('T', ' ').replace('Z', '')
@@ -71,10 +72,8 @@ class RuleForSymLink():
             logging.critical(symlink)
             
     #-------------------------------------------------------------------------------------------------------------------------  
-
-
     def run(self):
-        '''response_samba_logs, number_of_hits_samba_logs = self.queryInElasticSearchSambaIndex()
+        response_samba_logs, number_of_hits_samba_logs = self.queryInElasticSearchSambaIndex()
         response_inotify_logs, number_of_hits_inotify_logs = self.queryInElasticSearchaInotifyIndex()
         updated_number_of_hits_samba_logs = number_of_hits_samba_logs
         updated_number_of_hits_inotify_logs = number_of_hits_inotify_logs
@@ -87,7 +86,7 @@ class RuleForSymLink():
                 updated_number_of_hits_samba_logs = number_of_hits_samba_logs
                 updated_number_of_hits_inotify_logs = number_of_hits_inotify_logs
                 self.corelate_events()
-            time.sleep(10)'''
-        self.corelate_events()
-
+            time.sleep(10)
+            
+    #-------------------------------------------------------------------------------------------------------------------------  
 
