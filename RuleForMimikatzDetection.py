@@ -1,4 +1,3 @@
-import code
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match, Q
 from threading import *

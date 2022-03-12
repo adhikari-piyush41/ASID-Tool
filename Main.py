@@ -3,12 +3,13 @@ from ConnectToElasticSearchAndQuery import ConnectAndQueryToElasticSearch
 from RuleForBruteforce import RuleForBruteforce
 from RuleForXSS import RuleForXSS
 from RuleForMimikatzDetection import RuleForMimikatzDetection
+from RuleForSymLink import RuleForSymLink
 
 class Main:
   
     #-------------------------------------------------------------------------------------------------------------------------
     def checkConnection(self):
-        objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://192.168.1.75:9200')
+        objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://192.168.1.71:9200')
         client = objectForConnectToElasticSearchAndQuery.connectToElasticSearch()
         # ConnectAndQueryToElasticSearch.connectToElasticSearch()
         # Check if elasticsearch is running or not. If running query in the elasticsearch.
@@ -48,12 +49,19 @@ class Main:
         objectOfRuleForMimikatz.run()
 
     #-------------------------------------------------------------------------------------------------------------------------
+
+    def detectSambaSymLink(self):
+        client = self.checkConnection()
+        objectOfRuleForSambaSymLink = RuleForSymLink(client)
+        objectOfRuleForSambaSymLink.run()
+
     def run(self):
         # Un-Comment it when necessary
         #self.detectBruteForce()
-        time.sleep(0.5)
-        self.detectXSS()
+        # objectOfRuleForBruteforcetime.sleep(0.5)
+        #self.detectXSS()
         #self.detectMimikatz()
+        self.detectSambaSymLink()
     
     #-------------------------------------------------------------------------------------------------------------------------
 
