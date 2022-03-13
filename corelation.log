@@ -41,8 +41,33 @@ bb
 19-Feb-22 23:03:04 CRITICAL XSS Attack attacker_ip=192.168.1.74 affected_url=http://192.168.52.92/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=79ce3f7af08144c113b2d1fd75ac4d58 http_status_code=403 referer=http://127.0.0.1/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0 http_method=GET content_length=491
 19-Feb-22 23:03:04 CRITICAL XSS Attack attacker_ip=192.168.1.74 affected_url=http://192.168.52.92/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=79ce3f7af08144c113b2d1fd75ac4d58 http_status_code=403 referer=http://127.0.0.1/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0 http_method=GET content_length=491
 19-Feb-22 23:03:04 CRITICAL XSS Attack attacker_ip=192.168.1.72 affected_url=http://192.168.52.92/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=79ce3f7af08144c113b2d1fd75ac4d58 http_status_code=403 referer=http://127.0.0.1/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0 http_method=GET content_length=491
-20-Feb-22 08:30:09 CRITICAL XSS Attack attacker_ip=['127.0.0.1'] affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=2b6491f985231a6c63f0aae681450394 http_status_code=403 referer=http://192.168.1.71/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.46 http_method=GET content_length=494
+20-Feb-22 08:30:09 CRITICAL XSS Attack attacker_ip=127.0.0.1 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=2b6491f985231a6c63f0aae681450394 http_status_code=403 referer=http://192.168.1.71/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.46 http_method=GET content_length=494
 20-Feb-22 08:33:26 CRITICAL XSS Attack attacker_ip=192.168.1.70 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=2b6491f985231a6c63f0aae681450394 http_status_code=403 referer=- user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.46 http_method=GET content_length=494
 20-Feb-22 08:44:27 CRITICAL XSS Attack attacker_ip=192.168.1.70 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=2b6491f985231a6c63f0aae681450394 http_status_code=403 referer=- user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.46 http_method=GET content_length=494
 20-Feb-22 08:45:33 CRITICAL XSS Attack attacker_ip=192.168.1.70 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=2b6491f985231a6c63f0aae681450394 http_status_code=403 referer=- user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36 OPR/83.0.4254.46 http_method=GET content_length=494
 12-Mar-22 23:26:15 CRITICAL SAMBA Symlink Vulnerability Exploited username=nobody share=tmp client_ip=192.168.1.70 folder_name=root1992929 folder_path=/tmp/
+13-Mar-22 00:52:14 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 00:55:37 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 00:56:30 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 00:58:49 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+
+
+13-Mar-22 11:13:37 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:15:37 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:17:47 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:17:52 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:17:57 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:02 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:46 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:51 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:52 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:57 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:57 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:18:57 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:19:02 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 11:20:54 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=127.0.0.1 
+13-Mar-22 16:37:04 CRITICAL BruteForce Attempts number_of_attempts=10 username=piyush program=vsftpd ip_address=192.168.1.71
+13-Mar-22 16:58:20 CRITICAL BruteForce Attempts number_of_attempts=14 username=piyush program=sshd ip_address=192.168.1.71 
+13-Mar-22 16:58:20 CRITICAL BruteForce Attempts number_of_attempts=10 username=piyush program=su ip_address= 
+13-Mar-22 16:59:00 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=192.168.1.71 
+13-Mar-22 17:01:52 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=192.168.1.71 

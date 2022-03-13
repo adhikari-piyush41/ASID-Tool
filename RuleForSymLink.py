@@ -86,7 +86,7 @@ class RuleForSymLink():
                 updated_number_of_hits_samba_logs = number_of_hits_samba_logs
                 updated_number_of_hits_inotify_logs = number_of_hits_inotify_logs
                 self.corelate_events()
-            time.sleep(10)
+            time.sleep(1)
             
     #-------------------------------------------------------------------------------------------------------------------------  
 

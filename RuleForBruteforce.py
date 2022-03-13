@@ -3,6 +3,7 @@ from elasticsearch.client import logger
 from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match
 from threading import *
+import threading, datetime
 
 class RuleForBruteforce(Thread):
 
@@ -15,9 +16,9 @@ class RuleForBruteforce(Thread):
 
     #-------------------------------------------------------------------------------------------------------------------------
     def queryInElasticSearchData(self):
-        s = Search(using=self.client, index="authentication_failed_index")
-        # s = Search(using=self.client, index="test_index")
-        # s = s.query("match", auth_failed_message="authentication failure")
+        s = Search(using=self.client, index="authentication_failed_index") 
+        '''\
+        .filter('range' ,  **{'@timestamp': {'gte': 'now-10m' , 'lt': 'now', 'format' : 'epoch_millis'}})'''
         s = s.query("match", auth_failed_message="authentication failure")
         s = s.sort('-@timestamp')
         s = s[0:30]
@@ -73,8 +74,8 @@ class RuleForBruteforce(Thread):
                 var2 = json.loads(key)
                 # Checking if the ip address is not in permitted networks.
                 if (var2['ip_address'] not in self.known_ip_list):
-                    # if(var2['ip_address'] != " "):
-                    if(var2['ip_address']):
+                    if(var2['ip_address'] != " "):
+                    #if(var2['ip_address']):
                         bruteForceLog = "BruteForce Attempts number_of_attempts={value} username={username} program={program} ip_address={ip_address}".format(value=value, username=var2['username'], program=var2['program'], ip_address=var2['ip_address'])
                         print (bruteForceLog)
                         logging.critical(bruteForceLog)               
@@ -82,18 +83,35 @@ class RuleForBruteforce(Thread):
                         bruteForceLog = "BruteForce Attempts number_of_attempts={value} username={username} program={program}".format(value=value, username=var2['username'], program=var2['program'])
                         print (bruteForceLog)
                         logging.critical(bruteForceLog)
+        
+
+        
 
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
+
         response, number_of_hits = self.queryInElasticSearchData()
         updated_number_of_hits = number_of_hits
         while True:
             response, number_of_hits = self.queryInElasticSearchData()
             print ("Old_B", number_of_hits)
-            if (number_of_hits-updated_number_of_hits)>=20:
+            if (number_of_hits-updated_number_of_hits)>=10:
                 updated_number_of_hits = number_of_hits
                 print ("Updated_B", updated_number_of_hits)
                 self.correlateEvents()
             time.sleep(1)
+
+        # response, number_of_hits = self.queryInElasticSearchData()
+        # for hit in response:
+        #      =  hit['@timestamp']
+        #     inotify_timestamp = inotify_timestamp.replace('T', ' ').replace('Z', '')
+        #     d2 = datetime.strptime(inotify_timestamp, '%Y-%m-%d %H:%M:%S.%f')
+
+
+        # self.correlateEvents()
+        # threading.Timer(5.0, self.run).start()
+        # threading.Timer(5.0, self.correlateEvents).start()
+        #self.correlateEvents()
+        #self.correlateEvents()
     
     #-------------------------------------------------------------------------------------------------------------------------

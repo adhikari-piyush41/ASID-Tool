@@ -1,14 +1,18 @@
-import time
+import time, threading
+from threading import *
 from ConnectToElasticSearchAndQuery import ConnectAndQueryToElasticSearch
 from RuleForBruteforce import RuleForBruteforce
 from RuleForXSS import RuleForXSS
 from RuleForMimikatzDetection import RuleForMimikatzDetection
 from RuleForSymLink import RuleForSymLink
+import threading
+from twisted.internet import task, reactor
 
-class Main:
+class Main(Thread):
   
     #-------------------------------------------------------------------------------------------------------------------------
     def checkConnection(self):
+        # objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://172.16.6.54:9200')
         objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://192.168.1.71:9200')
         client = objectForConnectToElasticSearchAndQuery.connectToElasticSearch()
         # ConnectAndQueryToElasticSearch.connectToElasticSearch()
@@ -28,7 +32,7 @@ class Main:
         users_list = ['piyush', 'root']
         known_ip_list = ['192.168.18.127', '192.168.18.130']
         objectOfRuleForBruteforce = RuleForBruteforce(client, users_list, known_ip_list)
-        objectOfRuleForBruteforce.start()
+        objectOfRuleForBruteforce.run()
         #objectOfRuleForBruteforce.join()
         # objectOfRuleForBruteforce.queryInElasticSearchData()
         
@@ -49,19 +53,19 @@ class Main:
         objectOfRuleForMimikatz.run()
 
     #-------------------------------------------------------------------------------------------------------------------------
-
     def detectSambaSymLink(self):
         client = self.checkConnection()
         objectOfRuleForSambaSymLink = RuleForSymLink(client)
         objectOfRuleForSambaSymLink.run()
 
+    #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
         # Un-Comment it when necessary
-        #self.detectBruteForce()
+        self.detectBruteForce()
         # objectOfRuleForBruteforcetime.sleep(0.5)
         #self.detectXSS()
         #self.detectMimikatz()
-        self.detectSambaSymLink()
+        #self.detectSambaSymLink()
     
     #-------------------------------------------------------------------------------------------------------------------------
 
