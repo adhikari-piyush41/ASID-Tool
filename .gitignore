@@ -5,3 +5,5 @@ lib64
 pyvenv.cfg
 share/
 env/
+__pycache__
+corelation.log
