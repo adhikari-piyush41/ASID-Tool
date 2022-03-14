@@ -57,10 +57,10 @@ class RuleForMimikatzDetection():
         updated_number_of_hits = number_of_hits
         while True:
             response, number_of_hits = self.queryInElasticSearchWinLogBeatIndex()
-            print ("Old_X", number_of_hits)
+            print ("Old_M", number_of_hits)
             if (number_of_hits-updated_number_of_hits)==1:
                 updated_number_of_hits = number_of_hits
-                print ("Updated_X", updated_number_of_hits)
+                print ("Updated_M", updated_number_of_hits)
                 self.detectMimikatz()
             time.sleep(1)
 
