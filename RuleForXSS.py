@@ -8,6 +8,7 @@ from urllib.parse import unquote
 import logging
 import time
 from threading import *
+from SendMail import SendMail
 
 class RuleForXSS(Thread):
 
@@ -110,6 +111,8 @@ class RuleForXSS(Thread):
             content_length=str(dataAccessLog['xss'][0]['content_length']))
             print (xssLog)
             logging.critical(xssLog)
+            objectOfSendMail = SendMail(xssLog)
+            objectOfSendMail.sendMail()
 
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
@@ -122,6 +125,6 @@ class RuleForXSS(Thread):
                 updated_number_of_hits = number_of_hits
                 print ("Updated_X", updated_number_of_hits)
                 self.correlateXSSEvents()
-            time.sleep(2)
+            time.sleep(1)
     
     #-------------------------------------------------------------------------------------------------------------------------

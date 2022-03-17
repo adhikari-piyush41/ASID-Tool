@@ -2,8 +2,8 @@ from os import symlink
 from elasticsearch_dsl import Search
 from datetime import datetime
 from elasticsearch_dsl.query import Match, Q
-from threading import *
 import time, logging
+from SendMail import SendMail
 
 class RuleForSymLink():
 
@@ -67,10 +67,11 @@ class RuleForSymLink():
                 share = str(data["samba"][0]["share"]),
                 folder_name = str(data["inotify"][0]["folder_name"]),
                 folder_path = str(data["inotify"][0]["folder_path"])
-            )    
-            print (symlink)
+            )
             logging.critical(symlink)
-            
+            objectOfSendMail = SendMail(symlink)
+            objectOfSendMail.sendMail()
+            print (symlink)
     #-------------------------------------------------------------------------------------------------------------------------  
     def run(self):
         response_samba_logs, number_of_hits_samba_logs = self.queryInElasticSearchSambaIndex()

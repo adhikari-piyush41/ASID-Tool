@@ -4,6 +4,7 @@ from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match
 from threading import *
 import threading, datetime
+from SendMail import SendMail
 
 class RuleForBruteforce(Thread):
 
@@ -78,15 +79,16 @@ class RuleForBruteforce(Thread):
                     #if(var2['ip_address']):
                         bruteForceLog = "BruteForce Attempts number_of_attempts={value} username={username} program={program} ip_address={ip_address}".format(value=value, username=var2['username'], program=var2['program'], ip_address=var2['ip_address'])
                         print (bruteForceLog)
-                        logging.critical(bruteForceLog)               
+                        logging.critical(bruteForceLog)
+                        objectOfSendMail = SendMail(bruteForceLog)
+                        objectOfSendMail.sendMail()             
                     else:
                         bruteForceLog = "BruteForce Attempts number_of_attempts={value} username={username} program={program}".format(value=value, username=var2['username'], program=var2['program'])
                         print (bruteForceLog)
                         logging.critical(bruteForceLog)
-        
-
-        
-
+                        objectOfSendMail = SendMail(symlink)
+                        objectOfSendMail.sendMail()
+                        
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
 
