@@ -2,6 +2,7 @@ from elasticsearch_dsl import Search
 from elasticsearch_dsl.query import Match, Q
 from threading import *
 import time, os, logging
+from SendMail import SendMail
 
 class RuleForMimikatzDetection():
 
@@ -12,7 +13,7 @@ class RuleForMimikatzDetection():
 
     #-------------------------------------------------------------------------------------------------------------------------
     def queryInElasticSearchWinLogBeatIndex(self):
-        s = Search(using=self.client, index=".ds-winlogbeat-8.0.1-2022.03.03-000001")
+        s = Search(using=self.client, index=".ds-winlogbeat-8.0.0-2022.03.18-000001")
         # Kwarg Unpacking for array values
         # s = s.filter('term', **{'category.keyword': 'Python'})
 
@@ -27,6 +28,7 @@ class RuleForMimikatzDetection():
 
     #-------------------------------------------------------------------------------------------------------------------------
     def detectMimikatz(self):
+        logging.basicConfig(filename='corelation.log', filemode='a', format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%b-%y %H:%M:%S')
         response, number_of_hits = self.queryInElasticSearchWinLogBeatIndex()
         '''known_processes_object = [
             "C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\4.18.2001.10-0\\MsMpEng.exe",
@@ -38,7 +40,6 @@ class RuleForMimikatzDetection():
         for hit in response:
             if (os.path.basename(hit['winlog']['event_data']['ObjectName']) == 'lsass.exe'):
                 res = any(processes in os.path.basename([hit][0]['winlog']['event_data']['ProcessName']) for processes in known_processes_object)
-                print (res)
                 if (res!=True):
                     mimikatz = "Mimikatz detected agent_name={agent_name} object_name={object} process={process} process_path={process_path} event_id={event_id} access_mask={access_mask}".format(
                         agent_name = [hit][0]['agent']['name'],
@@ -48,8 +49,10 @@ class RuleForMimikatzDetection():
                         event_id = [hit][0]['winlog']['event_id'],
                         access_mask = [hit][0]['winlog']['event_data']['AccessMask']
                     )
-                    print (mimikatz)
-                logging.critical(mimikatz)
+                #print (mimikatz)
+                    logging.critical(mimikatz)
+                    objectOfSendMail = SendMail(mimikatz)
+                    objectOfSendMail.sendMail()
 
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
@@ -62,7 +65,6 @@ class RuleForMimikatzDetection():
                 updated_number_of_hits = number_of_hits
                 print ("Updated_M", updated_number_of_hits)
                 self.detectMimikatz()
-            time.sleep(1)
-
+            time.sleep(0.5)
     #-------------------------------------------------------------------------------------------------------------------------
 

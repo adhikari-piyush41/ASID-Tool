@@ -86,7 +86,7 @@ class RuleForBruteforce(Thread):
                         bruteForceLog = "BruteForce Attempts number_of_attempts={value} username={username} program={program}".format(value=value, username=var2['username'], program=var2['program'])
                         print (bruteForceLog)
                         logging.critical(bruteForceLog)
-                        objectOfSendMail = SendMail(symlink)
+                        objectOfSendMail = SendMail(bruteForceLog)
                         objectOfSendMail.sendMail()
                         
     #-------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ class RuleForBruteforce(Thread):
                 updated_number_of_hits = number_of_hits
                 print ("Updated_B", updated_number_of_hits)
                 self.correlateEvents()
-            time.sleep(1)
+            time.sleep(5)
 
         # response, number_of_hits = self.queryInElasticSearchData()
         # for hit in response:

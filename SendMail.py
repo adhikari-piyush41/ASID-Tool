@@ -10,8 +10,10 @@ class SendMail():
         port = 465
         smtp_server = "smtp.gmail.com"
         sender_email = "ha9562983@gmail.com"
-        password = input("Type your password and press enter: ")
-        receiver_email = input("Type the email to which you want to send mail: ")
+        password = "bh8xJce26MhJUF6"
+        receiver_email = "adhikaripiyush41@gmail.com"
+        # password = input("Type your password and press enter: ")
+        # receiver_email = input("Type the email to which you want to send mail: ")
         Content = "This message is send from the Correlation Script."
 
         msg = EmailMessage()
@@ -27,7 +29,3 @@ class SendMail():
             server.login(sender_email, password)
             server.send_message(msg)
             print ('Mail Sent')
-
-
-obj = SendMail("Hello, world!")
-obj.sendMail()

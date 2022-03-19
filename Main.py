@@ -6,7 +6,6 @@ from RuleForXSS import RuleForXSS
 from RuleForMimikatzDetection import RuleForMimikatzDetection
 from RuleForSymLink import RuleForSymLink
 import threading
-from twisted.internet import task, reactor
 
 class Main(Thread):
   
@@ -33,7 +32,7 @@ class Main(Thread):
         known_ip_list = ['192.168.18.127', '192.168.18.130']
         objectOfRuleForBruteforce = RuleForBruteforce(client, users_list, known_ip_list)
         objectOfRuleForBruteforce.run()
-        #objectOfRuleForBruteforce.join()
+        # objectOfRuleForBruteforce.join()
         # objectOfRuleForBruteforce.queryInElasticSearchData()
         
     #-------------------------------------------------------------------------------------------------------------------------
@@ -61,9 +60,9 @@ class Main(Thread):
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
         # Un-Comment it when necessary
-        self.detectBruteForce()
+        #self.detectBruteForce()
         # objectOfRuleForBruteforcetime.sleep(0.5)
-        #self.detectXSS()
+        self.detectXSS()
         #self.detectMimikatz()
         #self.detectSambaSymLink()
     
