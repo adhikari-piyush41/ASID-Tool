@@ -3,9 +3,10 @@ from elasticsearch_dsl import Search
 from datetime import datetime
 from elasticsearch_dsl.query import Match, Q
 import time, logging
+from threading import *
 from SendMail import SendMail
 
-class RuleForSymLink():
+class RuleForSymLink(Thread):
 
     #-------------------------------------------------------------------------------------------------------------------------   
     def __init__(self, client):
@@ -70,8 +71,7 @@ class RuleForSymLink():
             )
             logging.critical(symlink)
             objectOfSendMail = SendMail(symlink)
-            objectOfSendMail.sendMail()
-            print (symlink)
+            objectOfSendMail.start()
     #-------------------------------------------------------------------------------------------------------------------------  
     def run(self):
         response_samba_logs, number_of_hits_samba_logs = self.queryInElasticSearchSambaIndex()
@@ -81,11 +81,12 @@ class RuleForSymLink():
         while True:
             response_samba_logs, number_of_hits_samba_logs = self.queryInElasticSearchSambaIndex()
             response_inotify_logs, number_of_hits_inotify_logs = self.queryInElasticSearchaInotifyIndex()
-            print ("Old Samba Hits", number_of_hits_samba_logs)
-            print ("Old Inotify Hits", number_of_hits_inotify_logs)
+            # print ("Old Samba Hits", number_of_hits_samba_logs)
+            # print ("Old Inotify Hits", number_of_hits_inotify_logs)
             if (number_of_hits_samba_logs-updated_number_of_hits_samba_logs) >= 1 and (number_of_hits_inotify_logs-updated_number_of_hits_inotify_logs) == 1:
                 updated_number_of_hits_samba_logs = number_of_hits_samba_logs
                 updated_number_of_hits_inotify_logs = number_of_hits_inotify_logs
+                print ("Symlink Vulnerability exploited")
                 self.corelate_events()
             time.sleep(1)
             

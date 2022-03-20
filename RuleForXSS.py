@@ -51,7 +51,6 @@ class RuleForXSS(Thread):
             "<svg id=x onfocusin=alert\Ddocument.cookie\D>",
             "<button onclick=alert\Ddocument.cookie\D>test</button>"
         ]
-        '''user_agent = ["curl", "wget", "openvas", "nessus"]'''
         data = {}
         data["xss"] = []
         for i in responseFromAccess:
@@ -70,19 +69,19 @@ class RuleForXSS(Thread):
                             "content_length": i.ContentLength
                         })
                         return data
-                '''print ("Reached Here!!")
-                for number in range (0, len(user_agent)):
-                    if (i.UserAgent == user_agent[number]):
-                        data["xss"].append({
-                        "ip": i.ClientIP,
-                        "url": fullURL,
-                        "http_status_code": i.HTTPStatusCode,
-                        "referer": i.Referer,
-                        "user_aagent": i.UserAgent,
-                        "http_method": i.HTTPMethod,
-                        "content_length": i.ContentLength
-                    })
-                return data'''
+                # print ("Reached Here!!")
+                # for number in range (0, len(user_agent)):
+                #     if (i.UserAgent == user_agent[number]):
+                #         data["xss"].append({
+                #         "ip": i.ClientIP,
+                #         "url": fullURL,
+                #         "http_status_code": i.HTTPStatusCode,
+                #         "referer": i.Referer,
+                #         "user_aagent": i.UserAgent,
+                #         "http_method": i.HTTPMethod,
+                #         "content_length": i.ContentLength
+                #     })
+                # return data
     
     #-------------------------------------------------------------------------------------------------------------------------
     def checkForXSSInErrorLog(self):
@@ -97,9 +96,6 @@ class RuleForXSS(Thread):
         logging.basicConfig(filename='corelation.log', filemode='a', format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%b-%y %H:%M:%S')  
         dataAccessLog = self.checkForXSSInAccessLog()
         dataErrorLog = self.checkForXSSInErrorLog()
-        #for ip in dataErrorLog:
-        print (dataAccessLog['xss'][0]['ip'])
-        print (dataErrorLog[0])
         if (dataAccessLog['xss'][0]['ip'] != dataErrorLog):
             xssLog = "XSS Attack attacker_ip={ip} affected_url={url} http_status_code={status} referer={referer} user_agent={user_agent} http_method={method} content_length={content_length}".format(
             ip=str(dataAccessLog['xss'][0]['ip']),
@@ -109,10 +105,9 @@ class RuleForXSS(Thread):
             user_agent=str(dataAccessLog['xss'][0]['user_aagent']), 
             method=str(dataAccessLog['xss'][0]['http_method']), 
             content_length=str(dataAccessLog['xss'][0]['content_length']))
-            print (xssLog)
             logging.critical(xssLog)
             objectOfSendMail = SendMail(xssLog)
-            objectOfSendMail.sendMail()
+            objectOfSendMail.start()
 
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
@@ -120,10 +115,11 @@ class RuleForXSS(Thread):
         updated_number_of_hits = number_of_hits
         while True:
             response, number_of_hits = self.queryInElasticSearchAccessIndex()
-            print ("Old_X", number_of_hits)
+            #print ("Old_X", number_of_hits)
             if (number_of_hits-updated_number_of_hits)==1:
                 updated_number_of_hits = number_of_hits
-                print ("Updated_X", updated_number_of_hits)
+                #print ("Updated_X", updated_number_of_hits)
+                print ("XSS attack detected")
                 self.correlateXSSEvents()
             time.sleep(1)
     

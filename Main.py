@@ -1,14 +1,12 @@
-import time, threading
-from threading import *
+import time
 from ConnectToElasticSearchAndQuery import ConnectAndQueryToElasticSearch
 from RuleForBruteforce import RuleForBruteforce
 from RuleForXSS import RuleForXSS
 from RuleForMimikatzDetection import RuleForMimikatzDetection
 from RuleForSymLink import RuleForSymLink
-import threading
 
-class Main(Thread):
-  
+class Main():
+
     #-------------------------------------------------------------------------------------------------------------------------
     def checkConnection(self):
         # objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://172.16.6.54:9200')
@@ -19,25 +17,21 @@ class Main(Thread):
         if not client.ping():
             raise ValueError("Connection failed")
         else:
-            print ("-------------------------------------------------")
-            print ("Connection started!!!")
-            print ("-------------------------------------------------")
+            # print ("-------------------------------------------------")
+            # print ("Connection started!!!")
+            # print ("-------------------------------------------------")
             return (client)
     
     #-------------------------------------------------------------------------------------------------------------------------
     def detectBruteForce(self):
-        
         client = self.checkConnection()
         users_list = ['piyush', 'root']
         known_ip_list = ['192.168.18.127', '192.168.18.130']
         objectOfRuleForBruteforce = RuleForBruteforce(client, users_list, known_ip_list)
-        objectOfRuleForBruteforce.run()
-        # objectOfRuleForBruteforce.join()
-        # objectOfRuleForBruteforce.queryInElasticSearchData()
+        objectOfRuleForBruteforce.start()
         
     #-------------------------------------------------------------------------------------------------------------------------
     def detectXSS(self):
-        
         # Change variable to single query self.checkConnection()
         client = self.checkConnection()
         objectOfRuleForXSS = RuleForXSS(client)
@@ -45,26 +39,27 @@ class Main(Thread):
         #objectOfRuleForXSS.join()
 
     #-------------------------------------------------------------------------------------------------------------------------    
-
     def detectMimikatz(self):
         client = self.checkConnection()
         objectOfRuleForMimikatz = RuleForMimikatzDetection(client)
-        objectOfRuleForMimikatz.run()
+        objectOfRuleForMimikatz.start()
 
     #-------------------------------------------------------------------------------------------------------------------------
     def detectSambaSymLink(self):
         client = self.checkConnection()
         objectOfRuleForSambaSymLink = RuleForSymLink(client)
-        objectOfRuleForSambaSymLink.run()
+        objectOfRuleForSambaSymLink.start()
 
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
         # Un-Comment it when necessary
-        #self.detectBruteForce()
-        # objectOfRuleForBruteforcetime.sleep(0.5)
-        self.detectXSS()
-        #self.detectMimikatz()
-        #self.detectSambaSymLink()
+        # self.detectBruteForce()
+        # time.sleep(0.5)
+        # self.detectXSS()
+        # time.sleep(0.5)
+        # self.detectMimikatz()
+        # time.sleep(0.5)
+        self.detectSambaSymLink()
     
     #-------------------------------------------------------------------------------------------------------------------------
 

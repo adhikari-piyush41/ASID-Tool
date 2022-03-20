@@ -1,12 +1,14 @@
 import smtplib, ssl
 from email.message import EmailMessage
+from threading import *
 
-class SendMail():
+class SendMail(Thread):
 
     def __init__(self, Content):
+        super(SendMail, self).__init__()
         self.Content = Content
-
-    def sendMail(self):
+        
+    def run(self):
         port = 465
         smtp_server = "smtp.gmail.com"
         sender_email = "ha9562983@gmail.com"

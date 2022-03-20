@@ -4,7 +4,7 @@ from threading import *
 import time, os, logging
 from SendMail import SendMail
 
-class RuleForMimikatzDetection():
+class RuleForMimikatzDetection(Thread):
 
     #-------------------------------------------------------------------------------------------------------------------------   
     def __init__(self, client):
@@ -30,12 +30,12 @@ class RuleForMimikatzDetection():
     def detectMimikatz(self):
         logging.basicConfig(filename='corelation.log', filemode='a', format='%(asctime)s %(levelname)s %(message)s', datefmt='%d-%b-%y %H:%M:%S')
         response, number_of_hits = self.queryInElasticSearchWinLogBeatIndex()
-        '''known_processes_object = [
-            "C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\4.18.2001.10-0\\MsMpEng.exe",
-            "C:\\Windows\\System32\\wbem\\WmiPrvSE.exe",
-            "C:\\Windows\\System32\\taskhostw.exe",
-            "C:\\Program Files\\rempl\\sedlauncher.exe"
-        ]'''
+        # known_processes_object = [
+        #     "C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\4.18.2001.10-0\\MsMpEng.exe",
+        #   "C:\\Windows\\System32\\wbem\\WmiPrvSE.exe",
+        #     "C:\\Windows\\System32\\taskhostw.exe",
+        #     "C:\\Program Files\\rempl\\sedlauncher.exe"
+        # ]
         known_processes_object = ["MsMpEng.exe", "WmiPrvSE.exe", "taskhostw.exe", "sedlauncher.exe", "TaskMgr.exe"]
         for hit in response:
             if (os.path.basename(hit['winlog']['event_data']['ObjectName']) == 'lsass.exe'):
@@ -49,10 +49,9 @@ class RuleForMimikatzDetection():
                         event_id = [hit][0]['winlog']['event_id'],
                         access_mask = [hit][0]['winlog']['event_data']['AccessMask']
                     )
-                #print (mimikatz)
                     logging.critical(mimikatz)
                     objectOfSendMail = SendMail(mimikatz)
-                    objectOfSendMail.sendMail()
+                    objectOfSendMail.start()
 
     #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
@@ -60,11 +59,12 @@ class RuleForMimikatzDetection():
         updated_number_of_hits = number_of_hits
         while True:
             response, number_of_hits = self.queryInElasticSearchWinLogBeatIndex()
-            print ("Old_M", number_of_hits)
+            # print ("Old_M", number_of_hits)
             if (number_of_hits-updated_number_of_hits)==1:
                 updated_number_of_hits = number_of_hits
-                print ("Updated_M", updated_number_of_hits)
+                print ("Mimikatz incident detected!")
+                # print ("Updated_M", updated_number_of_hits)
                 self.detectMimikatz()
-            time.sleep(0.5)
+            time.sleep(1)
     #-------------------------------------------------------------------------------------------------------------------------
 

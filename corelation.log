@@ -3,38 +3,13 @@
 18-Mar-22 21:13:48 CRITICAL Mimikatz detected agent_name=SUPRAM object_name=lsass.exe process=mimikatz.exe process_path=D:\ELK\Development\mimikatz-master\mimikatz-master\x64\mimikatz.exe event_id=4656 access_mask=0x1010
 18-Mar-22 21:27:46 CRITICAL Mimikatz detected agent_name=SUPRAM object_name=lsass.exe process=mimikatz.exe process_path=D:\ELK\Development\mimikatz-master\mimikatz-master\x64\mimikatz.exe event_id=4656 access_mask=0x1010
 18-Mar-22 21:30:24 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=192.168.1.71 
-18-Mar-22 21:43:40 WARNING POST http://192.168.1.71:9200/authentication_failed_index/_search [status:N/A request:10.013s]
-Traceback (most recent call last):
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\connectionpool.py", line 449, in _make_request
-    six.raise_from(e, None)
-  File "<string>", line 3, in raise_from
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\connectionpool.py", line 444, in _make_request
-    httplib_response = conn.getresponse()
-  File "C:\Users\absult\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 1371, in getresponse
-    response.begin()
-  File "C:\Users\absult\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 319, in begin
-    version, status, reason = self._read_status()
-  File "C:\Users\absult\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 280, in _read_status
-    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
-  File "C:\Users\absult\AppData\Local\Programs\Python\Python39\lib\socket.py", line 704, in readinto
-    return self._sock.recv_into(b)
-socket.timeout: timed out
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\elasticsearch\connection\http_urllib3.py", line 255, in perform_request
-    response = self.pool.urlopen(
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\connectionpool.py", line 785, in urlopen
-    retries = retries.increment(
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\util\retry.py", line 525, in increment
-    raise six.reraise(type(error), error, _stacktrace)
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\packages\six.py", line 770, in reraise
-    raise value
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\connectionpool.py", line 703, in urlopen
-    httplib_response = self._make_request(
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\connectionpool.py", line 451, in _make_request
-    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
-  File "D:\ELK\Development\ASID-Tool\env\lib\site-packages\urllib3\connectionpool.py", line 340, in _raise_timeout
-    raise ReadTimeoutError(
-urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='192.168.1.71', port=9200): Read timed out. (read timeout=10)
+19-Mar-22 08:49:16 CRITICAL XSS Attack attacker_ip=192.168.1.64 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=d288f58e9d99db8f1152df3a4b8a2a98 http_status_code=403 referer=- user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 http_method=GET content_length=494
+19-Mar-22 10:21:09 CRITICAL SAMBA Symlink Vulnerability Exploited username=nobody share=tmp client_ip=192.168.1.64 folder_name=abcdef folder_path=/tmp/
+20-Mar-22 05:33:56 CRITICAL BruteForce Attempts number_of_attempts=22 username=piyush program=sshd ip_address=192.168.1.71 
+20-Mar-22 05:35:23 CRITICAL XSS Attack attacker_ip=192.168.1.64 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=0e1a190b344d447936a53bfd28172867 http_status_code=403 referer=http://192.168.1.71/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 http_method=GET content_length=493
+20-Mar-22 05:42:04 CRITICAL XSS Attack attacker_ip=192.168.1.64 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=0e1a190b344d447936a53bfd28172867 http_status_code=403 referer=http://192.168.1.71/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 http_method=GET content_length=494
+20-Mar-22 05:53:19 CRITICAL BruteForce Attempts number_of_attempts=27 username=piyush program=sshd ip_address=192.168.1.71 
+20-Mar-22 05:55:04 CRITICAL BruteForce Attempts number_of_attempts=30 username=piyush program=sshd ip_address=192.168.1.71 
+20-Mar-22 05:56:25 CRITICAL XSS Attack attacker_ip=192.168.1.64 affected_url=http://192.168.1.71/DVWA/vulnerabilities/xss_r/?name=%3Cscript%3Ealert%28document.cookie%29%3B%3C%2Fscript%3E&user_token=0e1a190b344d447936a53bfd28172867 http_status_code=403 referer=http://192.168.1.71/DVWA/vulnerabilities/xss_r/ user_agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.74 Safari/537.36 http_method=GET content_length=494
+20-Mar-22 06:06:09 CRITICAL Mimikatz detected agent_name=SUPRAM object_name=lsass.exe process=mimikatz.exe process_path=D:\ELK\Development\mimikatz-master\mimikatz-master\x64\mimikatz.exe event_id=4656 access_mask=0x1010
+20-Mar-22 06:19:49 CRITICAL SAMBA Symlink Vulnerability Exploited username=nobody share=tmp client_ip=192.168.1.64 folder_name=symlinkattck folder_path=/tmp/
