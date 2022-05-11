@@ -1,0 +1,47 @@
+# Configure for connecting with the elasticsearch
+Elasticsearch:
+
+# Provide elasticsearch ip address
+  ip: "***ChangeMe***"
+
+# Provide elasticsearch port number
+  port: 9200
+
+# Provide elasticsearch login credentials
+  user: "elastic"
+  password: "***ChangeMe***"
+
+# Configure for adding or removing whitelisted users
+WhiteListedUser:
+ #- "root"
+ #- "kali"
+ # Add whitelisted users
+
+# Configure for adding or removing whitelisted ip
+WhiteListedIP:
+ #- "192.168.28.128"
+ #- "192.168.18.130"
+ # Add whitelisted IPs
+
+# Configuring for setting up open smtp that will allow to send users mail
+Smtp:
+
+ # Provide smtp server address
+ smtp_server: "smtp.gmail.com"
+
+ # Provide port number of smtp
+ port: 465
+
+ # Provide login credentials of the sender mail
+ senderMail: "***ChangeMe***"
+ senderPassword: "***ChangeMe***"
+
+ # Provide receiver mail addresses that should receive alerts
+ Mail:
+  receiverMail: "***ChangeMe***"
+  ccReceiverMail:
+   - "***ChangeMe***"
+   # Add other users mail if needed
+ 
+ # Change the content that should be sent in the messages
+ content: "This message is send from the ASID tool"
