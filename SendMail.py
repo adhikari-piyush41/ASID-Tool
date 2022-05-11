@@ -1,33 +1,41 @@
-import smtplib, ssl
+import smtplib, ssl, yaml
 from email.message import EmailMessage
 from threading import *
 
+# The class is used to send mail to the respective users set at config.yml file
 class SendMail(Thread):
 
+    #-------------------------------------------------------------------------------------------------------------------------
     def __init__(self, Content):
         super(SendMail, self).__init__()
+        # Content receives the security incident detected log messages.
         self.Content = Content
-        
+    
+    #-------------------------------------------------------------------------------------------------------------------------
     def run(self):
-        port = 465
-        smtp_server = "smtp.gmail.com"
-        sender_email = "ha9562983@gmail.com"
-        password = "bh8xJce26MhJUF6"
-        receiver_email = "adhikaripiyush41@gmail.com"
-        # password = input("Type your password and press enter: ")
-        # receiver_email = input("Type the email to which you want to send mail: ")
-        Content = "This message is send from the Correlation Script."
 
+        # Opening the config.yml file for SMTP settings.
+        with open('config.yml', 'r') as file:
+            settings = yaml.safe_load(file)
+
+        # Setting up open smtp to send mail to the specified users with subject and content.
         msg = EmailMessage()
         msg['Subject'] = 'Alert - Incident detected'
-        msg['From'] = sender_email
-        msg['To'] = receiver_email
-        msg.set_content(self.Content)
+        msg['From'] = settings['Smtp']['senderMail']
+        msg['To'] = settings['Smtp']['Mail']['receiverMail']
+        msg['Cc'] = ', '.join(settings['Smtp']['Mail']['ccReceiverMail'])
+        content = str(settings['Smtp']['content']) + "\n" + str(self.Content)
+        msg.set_content(content)
 
         context = ssl.create_default_context()
 
-
-        with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-            server.login(sender_email, password)
-            server.send_message(msg)
-            print ('Mail Sent')
+        # Sends mail to the specified users set at config.yml file.
+        try:
+            with smtplib.SMTP_SSL(settings['Smtp']['smtp_server'], settings['Smtp']['port'], context=context) as server:
+                server.login(settings['Smtp']['senderMail'], settings['Smtp']['senderPassword'])
+                server.send_message(msg)
+                print ('Mail Sent')
+        except smtplib.SMTPAuthenticationError:
+            print ("Mail Authentication Failure." + "\n" + "Please enter correct sender email address and password in the config.yml file!")
+        
+        #-------------------------------------------------------------------------------------------------------------------------

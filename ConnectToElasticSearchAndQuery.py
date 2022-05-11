@@ -1,18 +1,20 @@
-#!/bin/python3
-# Connecting python with the elasticsearch
-
 from elasticsearch import Elasticsearch
+import yaml
 
+# This class connects the code to the Elasticsearch.
 class ConnectAndQueryToElasticSearch:
-
-    #-------------------------------------------------------------------------------------------------------------------------
-    def __init__(self, ip_address):
-        self.ip_address = ip_address
 
     #-------------------------------------------------------------------------------------------------------------------------    
     def connectToElasticSearch(self):
-        # client = Elasticsearch('http://172.16.1.218:9200', size=10000)
-        client = Elasticsearch(self.ip_address)
+        # Opening yaml config file, where all settings are available which allows user to change basic configurations.
+        with open('config.yml', 'r') as file:
+            settings = yaml.safe_load(file)
+        '''
+            Line 17 connects code with the elasticsearch through elasticsearch hosted IP, username, and password.
+            syntax: 
+                client = Elasticsearch(ElasticsearchIP, Username, Password)
+        '''
+        client = Elasticsearch(settings['Elasticsearch']['ip'], http_auth=(settings['Elasticsearch']['user'], settings['Elasticsearch']['password']))
         return client
     
     #-------------------------------------------------------------------------------------------------------------------------

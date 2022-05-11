@@ -1,4 +1,4 @@
-import time
+import time, yaml
 from ConnectToElasticSearchAndQuery import ConnectAndQueryToElasticSearch
 from RuleForBruteforce import RuleForBruteforce
 from RuleForXSS import RuleForXSS
@@ -9,24 +9,22 @@ class Main():
 
     #-------------------------------------------------------------------------------------------------------------------------
     def checkConnection(self):
-        # objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://172.16.6.54:9200')
-        objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch('http://192.168.1.71:9200')
+        objectForConnectToElasticSearchAndQuery = ConnectAndQueryToElasticSearch()
         client = objectForConnectToElasticSearchAndQuery.connectToElasticSearch()
-        # ConnectAndQueryToElasticSearch.connectToElasticSearch()
         # Check if elasticsearch is running or not. If running query in the elasticsearch.
         if not client.ping():
-            raise ValueError("Connection failed")
-        else:
-            # print ("-------------------------------------------------")
-            # print ("Connection started!!!")
-            # print ("-------------------------------------------------")
-            return (client)
+            raise ValueError("Connection failed!")
+        return client
     
     #-------------------------------------------------------------------------------------------------------------------------
     def detectBruteForce(self):
         client = self.checkConnection()
-        users_list = ['piyush', 'root']
-        known_ip_list = ['192.168.18.127', '192.168.18.130']
+        with open('config.yml', 'r') as file:
+            settings = yaml.safe_load(file)
+        users_list = settings['WhiteListedUser']
+        known_ip_list = settings['WhiteListedIP']
+        # users_list = ['piyush', 'root']
+        # known_ip_list = ['192.168.18.127', '192.168.18.130']
         objectOfRuleForBruteforce = RuleForBruteforce(client, users_list, known_ip_list)
         objectOfRuleForBruteforce.start()
         
@@ -36,7 +34,6 @@ class Main():
         client = self.checkConnection()
         objectOfRuleForXSS = RuleForXSS(client)
         objectOfRuleForXSS.start()
-        #objectOfRuleForXSS.join()
 
     #-------------------------------------------------------------------------------------------------------------------------    
     def detectMimikatz(self):
@@ -57,9 +54,10 @@ class Main():
         # time.sleep(0.5)
         # self.detectXSS()
         # time.sleep(0.5)
-        # self.detectMimikatz()
-        # time.sleep(0.5)
-        self.detectSambaSymLink()
+        self.detectMimikatz()
+        time.sleep(0.5)
+        #self.detectSambaSymLink()
+        #time.sleep(0.5)
     
     #-------------------------------------------------------------------------------------------------------------------------
 
