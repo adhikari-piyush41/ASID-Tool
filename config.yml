@@ -40,7 +40,7 @@ Smtp:
  Mail:
   receiverMail: "***ChangeMe***"
   ccReceiverMail:
-   - "***ChangeMe***"
+   #- "***ChangeMe***"
    # Add other users mail if needed
  
  # Change the content that should be sent in the messages
